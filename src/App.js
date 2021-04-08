@@ -1,22 +1,33 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
-import {Switch,Route} from 'react-router-dom'
+import {Switch,Route} from 'react-router-dom';
+import Navs from "./components/Navs";
+import Home from './pages/Home';
+import Starred from './pages/Starred';
 
 function App() {
-  return <Switch>
+  return (
+    <div>
+      <Navs />
+
+  <Switch>
       <Route exact path="/">
-        This is Home Page
+        <Home />
       </Route>
 
       <Route exact path="/starred">
-        This is Starred Page
+        <Starred />
       </Route>
 
       <Route>
-        This is 404 Page.
+        <div>
+          Not found
+        </div>
       </Route>
-    </Switch>;
-
+    </Switch>
+    </div>
+  );
 }
 
 export default App;
