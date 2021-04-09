@@ -8,7 +8,6 @@
 /* eslint-disable arrow-body-style */
 import React,{useState} from 'react'
 import MainPageLayout from '../components/MainPageLayout'
-import {apiGet} from '../misc/config';
 
 export const Home = () => {
     //update function is setInput
@@ -17,9 +16,15 @@ export const Home = () => {
     const[results,setResults]=useState(null);
 
     const onSearch = () => {
-        apiGet(`/search/shows?q=${input}`)
+        //google search tvmaze
+        //https://api.tvmaze.com/search/shows?q=girls
+        //it is use to fetch the remote/external data so we use browser api(fetch)
+        //fetch function return promise so we use then it will return response object we need to convert it into json
+        fetch(`https://api.tvmaze.com/search/shows?q=${input}`)
+        .then(r => r.json())
         .then(result => {
             setResults(result);
+            console.log(result);
         })
     }
 
