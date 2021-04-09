@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-empty */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-template-curly-in-string */
@@ -15,9 +16,13 @@ export const Home = () => {
     const[input,setInput]=useState('');
     //for result we will set state
     const[results,setResults]=useState(null);
+    //for search of shows and actor
+    const[searchOption,setsearchOption]=useState('shows');
+
+    const isshowSearch = searchOption === 'shows';
 
     const onSearch = () => {
-        apiGet(`/search/shows?q=${input}`)
+        apiGet(`/search/${searchOption}?q=${input}`)
         .then(result => {
             setResults(result);
         })
@@ -48,19 +53,33 @@ export const Home = () => {
         }
         if(results && results.length > 0 )
         {
-            return (
-            <div>{results.map(item => (
+            return results[0].show ? results.map(item => (
             <div key={item.show.id}>{item.show.name}</div>
-            ))}
-            </div>
-            );
+            )) : results.map(item => (
+            <div key={item.person.id}>{item.person.name}</div>
+            ));
         }
         return null;
     }
 
+    const onRadioChange = (ev) =>
+    {
+        setsearchOption(ev.target.value);
+    }
+
     return (
         <MainPageLayout>
-            <input type="text" onChange={onInputChange} onKeyDown={onKeyDown} value={input}/>
+            <input type="text" placeholder="Search for something" onChange={onInputChange} onKeyDown={onKeyDown} value={input}/>
+            <div>
+                <label htmlFor="shows-search">
+                    Shows
+                    <input id="shows-search" type="radio" value="shows" checked={isshowSearch} onChange={onRadioChange}/>
+                </label>
+                <label htmlFor="actors-search">
+                    Actors
+                    <input id="actors-search" type="radio" value="people" checked={!isshowSearch} onChange={onRadioChange}/>
+                </label>
+            </div>
             <button type="button" onClick={onSearch}>Search</button>
             {renderResults()}
         </MainPageLayout>
