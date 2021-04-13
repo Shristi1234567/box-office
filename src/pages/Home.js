@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-empty */
 /* eslint-disable no-use-before-define */
@@ -22,6 +23,15 @@ export const Home = () => {
     const[searchOption,setsearchOption]=useState('shows');
 
     const isshowSearch = searchOption === 'shows';
+    
+//React that your component needs to do something after render.
+    useEffect(() => {
+        console.log("use effect run");
+        return () => {
+            //this will work when the component is unmounted
+            console.log('exit');
+        };
+    }, [searchOption]);
 
     const onSearch = () => {
         apiGet(`/search/${searchOption}?q=${input}`)
