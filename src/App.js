@@ -1,14 +1,26 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
 import {Switch,Route} from 'react-router-dom';
+import {ThemeProvider} from 'styled-components';
 import Home from './pages/Home';
 import Starred from './pages/Starred';
 import Shows from './pages/Shows';
 
+const theme = {
+  mainColors: {
+    blue: '#2400ff',
+    gray: '#c6c6c6',
+    dark: '#353535',
+  },
+};
+
+
 function App() {
   return (
+    <ThemeProvider theme={theme}>
   <Switch>
       <Route exact path="/">
         <Home />
@@ -29,6 +41,7 @@ function App() {
         </div>
       </Route>
     </Switch>
+    </ThemeProvider>
   );
 }
 
