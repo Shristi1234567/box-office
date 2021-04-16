@@ -13,6 +13,7 @@ import ActorGrid from '../components/actor/ActorGrid';
 import MainPageLayout from '../components/MainPageLayout'
 import ShowGrid from '../components/show/ShowGrid';
 import {apiGet} from '../misc/config';
+import { RadioInputsWrapper, SearchButtonWrapper, SearchInput } from './Home.styled';
 
 export const Home = () => {
     //update function is setInput
@@ -86,18 +87,26 @@ export const Home = () => {
 
     return (
         <MainPageLayout>
-            <input type="text" placeholder="Search for something" onChange={onInputChange} onKeyDown={onKeyDown} value={input}/>
-            <div>
+            <SearchInput type="text" placeholder="Search for something" onChange={onInputChange} onKeyDown={onKeyDown} value={input}/>
+            <RadioInputsWrapper>
+                <div>
                 <label htmlFor="shows-search">
                     Shows
                     <input id="shows-search" type="radio" value="shows" checked={isshowSearch} onChange={onRadioChange}/>
                 </label>
+                </div>
+
+                <div>
                 <label htmlFor="actors-search">
                     Actors
                     <input id="actors-search" type="radio" value="people" checked={!isshowSearch} onChange={onRadioChange}/>
                 </label>
-            </div>
+                </div>
+            </RadioInputsWrapper>
+            
+            <SearchButtonWrapper>
             <button type="button" onClick={onSearch}>Search</button>
+            </SearchButtonWrapper>
             {renderResults()}
         </MainPageLayout>
     )   
